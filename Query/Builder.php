@@ -106,13 +106,13 @@ class Builder
 
         $whereString = ' WHERE ';        
         foreach ($this->where as $where) {
-            preg_match('/(AND |OR )?(\w+) *([!=><]+|LIKE) *[\'"]?(.*)[\'"]?/i', $where,
+            preg_match('/(AND |OR )?(\w+) *([!=><]+|LIKE) *[\'"]?([^\'"]*)[\'"]?/i', $where,
                        $matches);
             
             list($all, $connector, $field, $operator, $value) = $matches;
             $salesforceFieldName = $this->annotationReader
                 ->getSalesforceField($this->from[0], $field)->name;
-            $whereString .= $connector . $salesforceFieldName . $operator
+            $whereString .= $connector . $salesforceFieldName . ' ' . $operator . ' '
                          . $this->quoteValue($value) . ' ';
         }
 

@@ -35,9 +35,7 @@ class Query
      */
     public function getResult()
     {
-        echo $this->query;die;
         $records = $this->client->query($this->query);
-        die;
         return new MappedRecordIterator($records, $this->mapper, $this->drivingModel);
     }
 
